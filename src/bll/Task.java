@@ -1,7 +1,5 @@
 package bll;
 
-import java.util.Date;
-
 public class Task {
 
 	public enum FAECHER {
@@ -10,9 +8,9 @@ public class Task {
 	
 	private FAECHER fach;
 	private String aufgabe;
-	private Date bisDatum;
+	private String bisDatum;
 	
-	public Task(FAECHER fach, String aufgabe, Date bisDatum) {
+	public Task(FAECHER fach, String aufgabe, String bisDatum) {
 		this.fach = fach;
 		this.aufgabe = aufgabe;
 		this.bisDatum = bisDatum;
@@ -34,11 +32,11 @@ public class Task {
 		this.aufgabe = aufgabe;
 	}
 
-	public Date getBisDatum() {
+	public String getBisDatum() {
 		return bisDatum;
 	}
 
-	public void setBisDatum(Date bisDatum) {
+	public void setBisDatum(String bisDatum) {
 		this.bisDatum = bisDatum;
 	}
 	
