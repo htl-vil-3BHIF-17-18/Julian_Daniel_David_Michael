@@ -34,7 +34,7 @@ public class MainFrame extends JFrame {
 		menuBar = new JMenuBar();
 		
 		menuItemDBSave = new JMenuItem("Datenbank");
-		
+		//menuItemCSVSave = new JMen
 		
 		menuSave.add(menuItemCSVSave);
 		menuSave.add(menuItemDBSave);
