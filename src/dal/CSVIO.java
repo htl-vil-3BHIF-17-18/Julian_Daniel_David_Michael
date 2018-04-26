@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -29,7 +31,8 @@ public class CSVIO {
 			inputStream = new BufferedReader(new FileReader(file.getAbsolutePath()));
 			while ((l = inputStream.readLine()) != null) {
 				splittedLine = l.split(";");
-				tempTask = new Task(FAECHER.valueOf(splittedLine[0]), splittedLine[1], splittedLine[2]);
+				SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy");
+				tempTask = new Task(FAECHER.valueOf(splittedLine[0]), splittedLine[1], dt.parse(splittedLine[2]));
 				newTasks.add(tempTask);
 			}
 		} catch (IOException e) {
@@ -38,6 +41,8 @@ public class CSVIO {
 			System.err.println("Keine Datei wurde ausgewaehlt!");
 		} catch (NumberFormatException ex) {
 			System.err.println("Fehler beim Parsen der Katalognummer!");
+		} catch (ParseException e) {
+			e.printStackTrace();
 		} finally {
 			if (inputStream != null) {
 				try {
@@ -56,7 +61,7 @@ public class CSVIO {
 		try {
 			outputStream = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
 			for(Task t : tasks) {
-				outputStream.write(t.getFach().toString() + ";" + t.getAufgabe() + ";" + t.getBisDatum() + "\n");
+				outputStream.write(t.getFach().toString() + ";" + t.getAufgabe() + ";" + t.getBisDatum().toString() + "\n");
 			} 
 		} catch (IOException e) {
 			System.err.println("Fehler beim Schreiben der Datei!");
