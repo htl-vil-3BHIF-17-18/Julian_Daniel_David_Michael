@@ -52,7 +52,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JRadioButton nigesch;
 
 	public MainFrame() {
-		this.setTitle("Hausaufgabenplaner RR"); // BLABLSLD FÖDSFÖLSDFJ
+		this.setTitle("Hausaufgabenplaner");
 		this.setSize(2000, 900);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
