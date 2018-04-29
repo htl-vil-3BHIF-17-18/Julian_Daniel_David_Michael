@@ -27,7 +27,7 @@ public class DatabaseIO {
 				stmt = con.prepareStatement("INSERT INTO tabelle VALUES (?,?,?)");
 				stmt.setString(1, t.getFach().toString());
 				stmt.setString(2, t.getAufgabe());
-				stmt.setString(3, t.getBisDatum());
+				stmt.setString(3, t.getBisDatum().toString());
 				stmt.execute();
 			}
 

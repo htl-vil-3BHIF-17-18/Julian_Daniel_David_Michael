@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -16,9 +18,15 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class MainFrame extends JFrame {
+import dal.CSVIO;
+import dal.DatabaseIO;
+
+public class MainFrame extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+
+	private CSVIO csvHandler;
+	private DatabaseIO databaseHandler;
 	
 	// Menu bar components
 	private JMenu menuSave;
@@ -26,14 +34,14 @@ public class MainFrame extends JFrame {
 	private JMenuItem menuItemDBSave;
 	private JMenuItem menuItemCSVSave;
 
-	private JPanel buttxtf = null;
-	private JButton hinzufuegen;
-	private JButton erledigt;
-	private JButton entfernen;
-
-	private JTextField jtfach;
-	private JTextField jtaufgabe;
-	private JTextField jtdatum;
+	// Panelright
+	private JPanel panelRight = null;
+	private JButton buttonHinzufuegen;
+	private JButton buttonErledigt;
+	private JButton buttonEntfernen;
+	private JTextField textfFach;
+	private JTextField textfAufgabe;
+	private JTextField textfDatum;
 
 	private JLabel platzhalter;
 	private JPanel nm;
@@ -54,19 +62,22 @@ public class MainFrame extends JFrame {
 	}
 
 	private void initializeControls() {
+		databaseHandler = new DatabaseIO();
+		csvHandler = new CSVIO();
+		
 		BorderLayout grid = new BorderLayout();
 		this.setLayout(grid);
 
-		this.buttxtf = new JPanel(new GridLayout(11, 1));
-		this.buttxtf.setPreferredSize(new Dimension(450, 400));
+		this.panelRight = new JPanel(new GridLayout(11, 1));
+		this.panelRight.setPreferredSize(new Dimension(450, 400));
 
-		this.hinzufuegen = new JButton("Hinzufügen");
-		this.erledigt = new JButton("Erledigt");
-		this.entfernen = new JButton("Entfernen");
+		this.buttonHinzufuegen = new JButton("Hinzufügen");
+		this.buttonErledigt = new JButton("Erledigt");
+		this.buttonEntfernen = new JButton("Entfernen");
 
-		this.jtfach = new JTextField("Fach:");
-		this.jtaufgabe = new JTextField("Aufgabe:");
-		this.jtdatum = new JTextField("Datum:");
+		this.textfFach = new JTextField("Fach:");
+		this.textfAufgabe = new JTextField("Aufgabe:");
+		this.textfDatum = new JTextField("Datum:");
 
 		this.platzhalter = new JLabel();
 		this.nm = new JPanel(new GridLayout(2, 1));
@@ -86,13 +97,13 @@ public class MainFrame extends JFrame {
 		menuItemDBSave = new JMenuItem("Datenbank");
 		menuItemCSVSave = new JMenuItem("CSV");
 
-		this.buttxtf.add(jtfach);
-		this.buttxtf.add(jtaufgabe);
-		this.buttxtf.add(jtdatum);
-		this.buttxtf.add(platzhalter);
-		this.buttxtf.add(hinzufuegen);
-		this.buttxtf.add(erledigt);
-		this.buttxtf.add(entfernen);
+		this.panelRight.add(textfFach);
+		this.panelRight.add(textfAufgabe);
+		this.panelRight.add(textfDatum);
+		this.panelRight.add(platzhalter);
+		this.panelRight.add(buttonHinzufuegen);
+		this.panelRight.add(buttonErledigt);
+		this.panelRight.add(buttonEntfernen);
 
 		this.menuSave.add(menuItemCSVSave);
 		this.menuSave.add(menuItemDBSave);
@@ -101,11 +112,25 @@ public class MainFrame extends JFrame {
 		this.nm.add(nigesch);
 		this.nm.add(vergessen);
 
-		this.add(this.buttxtf, BorderLayout.LINE_END);
+		this.add(this.panelRight, BorderLayout.LINE_END);
 		this.setJMenuBar(this.menuBar);
 		this.add(this.nm, BorderLayout.PAGE_END);
 
 		this.pack();
 		this.setSize(1000, 850);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == buttonEntfernen) {
+			
+		}else if(e.getSource() == buttonErledigt) {
+			
+		}else if(e.getSource() == buttonHinzufuegen) {
+			
+		}else if(e.getSource() == menuItemCSVSave) {
+			// csvHandler.writeTasks();
+		}else if(e.getSource() == menuItemDBSave) {
+			// databaseHandler.writeTasks();
+		}
 	}
 }
