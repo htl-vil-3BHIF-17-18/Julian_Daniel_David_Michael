@@ -20,14 +20,15 @@ public class DatabaseIO {
 		PreparedStatement stmt = null;
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			// TODO Datenbankverbindung herstellen
-			con = DriverManager.getConnection("datenbankverbindung..."); // jdbc:oracle:thin:d3a13/d3a@192.168.128.152:1521:ora11g
+
+			con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@192.168.128.152:1521:ora11g");
 			for (Task t : tasks) {
-				// TODO Richtigen Tabellennamen eingeben...
-				stmt = con.prepareStatement("INSERT INTO tabelle VALUES (?,?,?)");
+
+				stmt = con.prepareStatement("INSERT INTO tasks VALUES (?,?,?)");
 				stmt.setString(1, t.getFach().toString());
 				stmt.setString(2, t.getAufgabe());
-				stmt.setString(3, t.getBisDatum().toString());
+				stmt.setString(3, this.convertDate(t.getBisDatum()));
+
 				stmt.execute();
 			}
 
@@ -51,11 +52,11 @@ public class DatabaseIO {
 		ResultSet rs = null;
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			// TODO verbindung herstellen
-			con = DriverManager.getConnection("datenbankverbindung..."); // jdbc:oracle:thin:nlinder/geheim2018!@localhost
+
+			con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@192.168.128.152:1521:ora11g");
 			stmt_Select = con.createStatement();
-			// TODO tabellennamen aendern
-			rs = stmt_Select.executeQuery("SELECT * FROM table");
+
+			rs = stmt_Select.executeQuery("SELECT * FROM tasks");
 			while (rs.next()) {
 				// TODO datenbanktabellen erstellen und daten versuchen zu lesen
 				// rs.getInt(index), rs.getString(index)...
@@ -78,5 +79,9 @@ public class DatabaseIO {
 		}
 		return null;
 	}
+	
+    private String convertDate(java.util.Date utilDate) {
+    	return String.valueOf(utilDate); 
+}
 
 }
