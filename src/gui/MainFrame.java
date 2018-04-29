@@ -47,7 +47,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JPanel nm;
 	private JButton notmaked;
 
-	// Radio Buttons unten heil
+	// Radio Buttons unten
 	private JRadioButton vergessen;
 	private JRadioButton nigesch;
 
