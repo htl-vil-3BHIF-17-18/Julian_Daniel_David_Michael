@@ -60,7 +60,7 @@ public class DatabaseIO {
 			while (rs.next()) {
 				// TODO datenbanktabellen erstellen und daten versuchen zu lesen
 				// rs.getInt(index), rs.getString(index)...
-
+				//seemsgood
 				// System.out.print(rs.getInt(1) + "\t"); //
 				// System.out.println(rs.getString(2));
 			}
