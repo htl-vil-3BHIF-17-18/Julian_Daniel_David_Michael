@@ -28,7 +28,11 @@ public class DatabaseIO {
 				stmt = con.prepareStatement("INSERT INTO tasks VALUES (?,?,?)");
 				stmt.setString(1, t.getFach().toString());
 				stmt.setString(2, t.getAufgabe());
+<<<<<<< HEAD
 				stmt.setString(3, this.convertDate(t.getBisDatum());
+=======
+				stmt.setString(3, t.getBisDatum().toString());
+>>>>>>> refs/remotes/origin/master
 				stmt.execute();
 			}
 

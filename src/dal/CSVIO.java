@@ -17,9 +17,10 @@ import bll.Task;
 import bll.Task.FAECHER;
 
 public class CSVIO {
-	
-	public CSVIO() {}
-	
+
+	public CSVIO() {
+	}
+
 	public ArrayList<Task> readTasks() {
 		File file = chooseFile();
 		BufferedReader inputStream = null;
@@ -54,15 +55,16 @@ public class CSVIO {
 		}
 		return newTasks;
 	}
-	
+
 	public void writeTasks(ArrayList<Task> tasks) {
 		File file = chooseFile();
 		BufferedWriter outputStream = null;
 		try {
 			outputStream = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
-			for(Task t : tasks) {
-				outputStream.write(t.getFach().toString() + ";" + t.getAufgabe() + ";" + t.getBisDatum().toString() + "\n");
-			} 
+			for (Task t : tasks) {
+				outputStream
+						.write(t.getFach().toString() + ";" + t.getAufgabe() + ";" + t.getBisDatum().toString() + "\n");
+			}
 		} catch (IOException e) {
 			System.err.println("Fehler beim Schreiben der Datei!");
 		} finally {
@@ -75,8 +77,7 @@ public class CSVIO {
 			}
 		}
 	}
-	
-	
+
 	private File chooseFile() {
 		JFileChooser fc = new JFileChooser();
 		fc.setDialogTitle("Please choose an image...");
