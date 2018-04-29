@@ -53,7 +53,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JRadioButton vergessen;
 	private JRadioButton nigesch;
 	
-	// Die zwei Listen
+	// Die zwei Listenn
 	private TaskList liste;
 	private TaskList forgottenlist;
 
