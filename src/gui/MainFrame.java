@@ -47,7 +47,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JPanel nm;
 	private JButton notmaked;
 
-	// Radio Buttons unten
+	// Radio Buttons unten heil
 	private JRadioButton vergessen;
 	private JRadioButton nigesch;
 
@@ -71,7 +71,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.panelRight = new JPanel(new GridLayout(11, 1));
 		this.panelRight.setPreferredSize(new Dimension(450, 400));
 
-		this.buttonHinzufuegen = new JButton("Hinzufügen");
+		this.buttonHinzufuegen = new JButton("Hinzufï¿½gen");
 		this.buttonErledigt = new JButton("Erledigt");
 		this.buttonEntfernen = new JButton("Entfernen");
 
