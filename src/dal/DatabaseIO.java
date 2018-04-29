@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.sql.Date;
 
 import bll.Task;
 
@@ -81,8 +80,8 @@ public class DatabaseIO {
 		return null;
 	}
 	
-    private Date convertDate(java.util.Date utilDate) {
-        return new Date(utilDate.getTime());
+    private String convertDate(java.util.Date utilDate) {
+    	return String.valueOf(utilDate); 
 }
 
 }
