@@ -196,15 +196,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				e1.printStackTrace();
 			}
 		} else if (e.getSource() == buttonAndern) {
-			Task tempT = liste.getSelectedTask();
-			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-			tempT.setAufgabe(textfAufgabe.getText());
-			try {
-				tempT.setBisDatum(df.parse(textfDatum.getText()));
-			} catch (ParseException e1) {
-				e1.printStackTrace();
-			}
-			tempT.setFach(FAECHER.valueOf((String) comboFach.getSelectedItem()));
+			
 		} else if (e.getSource() == buttonSetTaskStatus) {
 			Task tempT = liste.getSelectedTask();
 			if (radioErledigt.isSelected()) {
@@ -217,6 +209,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				tempT.setStatus(STATUS.VERGESSEN);
 				radioVergessen.setSelected(false);
 			}
+			liste.updateList();
 		} else if (e.getSource() == menuItemCSVSave) {
 			csvHandler.writeTasks(liste.getArrayList());
 		} else if (e.getSource() == menuItemDBSave) {
