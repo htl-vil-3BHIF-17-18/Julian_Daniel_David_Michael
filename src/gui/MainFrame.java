@@ -190,7 +190,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 			try {
 				Task newTask = new Task(FAECHER.valueOf((String) comboFach.getSelectedItem()), textfAufgabe.getText(),
-						df.parse(textfDatum.getText()));
+						df.parse(textfDatum.getText()), STATUS.OFFEN);
 				liste.addTask(newTask);
 			} catch (ParseException e1) {
 				e1.printStackTrace();
