@@ -59,6 +59,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JRadioButton radioNichtGeschaft;
 	private JRadioButton radioErledigt;
 	private JButton buttonSetTaskStatus;
+	private JButton buttonShowAllNotDoneTasks;
 
 	// Die zwei Listenn
 	private TaskList liste;
@@ -83,7 +84,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.menuBar.setPreferredSize(new Dimension(40, 60));
 		menuSave = new JMenu("Speicher");
 		menuItemDBSave = new JMenuItem("Datenbank");
+		menuItemDBSave.addActionListener(this);
 		menuItemCSVSave = new JMenuItem("CSV");
+		menuItemCSVSave.addActionListener(this);
 
 		this.panelRight = new JPanel(new GridLayout(0, 2));
 		this.panelRight.setPreferredSize(new Dimension(450, 40));
@@ -101,8 +104,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.buttonEntfernen.addActionListener(this);
 		this.buttonEntfernen.setEnabled(false);
 
-		String[] items = new String[Task.FAECHER.values().length];;
-		for(int i = 0; i < Task.FAECHER.values().length; i++) {
+		String[] items = new String[Task.FAECHER.values().length];
+		;
+		for (int i = 0; i < Task.FAECHER.values().length; i++) {
 			items[i] = Task.FAECHER.values()[i].toString();
 		}
 		this.comboFach = new JComboBox<>(items);
@@ -125,6 +129,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.buttonSetTaskStatus = new JButton("Setze Task Status");
 		this.buttonSetTaskStatus.addActionListener(this);
 		this.buttonSetTaskStatus.setEnabled(false);
+		this.buttonShowAllNotDoneTasks = new JButton("unerledigte Aufgaben");
+		this.buttonShowAllNotDoneTasks.addActionListener(this);
 		ButtonGroup groupRadios = new ButtonGroup();
 		groupRadios.add(radioErledigt);
 		groupRadios.add(radioNichtGeschaft);
@@ -167,6 +173,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.panelBottom.add(new JLabel());
 		this.panelBottom.add(new JLabel());
 		this.panelBottom.add(buttonSetTaskStatus);
+		this.panelBottom.add(buttonShowAllNotDoneTasks);
 
 		this.add(this.panelRight, BorderLayout.LINE_END);
 		this.setJMenuBar(this.menuBar);
@@ -220,6 +227,8 @@ public class MainFrame extends JFrame implements ActionListener {
 														// buttons aktiviert
 														// wird
 			buttonSetTaskStatus.setEnabled(true);
+		} else if (e.getSource() == buttonShowAllNotDoneTasks) {
+			new DialogNotFinishedTasks(liste.getAllNotFinishedTasks());
 		}
 	}
 
