@@ -22,11 +22,11 @@ public class TaskList extends JList<Task> implements MouseListener {
 	private MainFrame mainf;
 
 	public TaskList(ArrayList<Task> tasks, MainFrame mainf) {
-		this.setTasks(tasks);
+		initializeControls();
 		this.mainf = mainf;
 		this.setPreferredSize(new Dimension(350, 500));
 		this.addMouseListener(this);
-		initializeControls();
+		this.setTasks(tasks);
 	}
 	
 	private void initializeControls() {
