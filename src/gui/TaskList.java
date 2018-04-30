@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -28,7 +29,7 @@ public class TaskList extends JList<Task> implements MouseListener {
 		this.addMouseListener(this);
 		this.setTasks(tasks);
 	}
-	
+
 	private void initializeControls() {
 		model = new DefaultListModel<Task>();
 		taskList = new JList<Task>();
@@ -39,8 +40,16 @@ public class TaskList extends JList<Task> implements MouseListener {
 		taskList.setBackground(Color.white);
 		taskList.addMouseListener(this);
 		taskList.setModel(model);
-		
+
 		this.add(scrollPane);
+	}
+
+	public void removeTask(Task task) {
+		model.removeElement(task);
+	}
+
+	public void addTask(Task newTask) {
+		model.addElement(newTask);
 	}
 
 	public void setTasks(List<Task> tasks) {
@@ -51,29 +60,29 @@ public class TaskList extends JList<Task> implements MouseListener {
 		this.setModel(model);
 	}
 
-	@Override
+	public Task getSelectedTask() {
+		return taskList.getSelectedValue();
+	}
+
 	public void mouseClicked(MouseEvent e) {
+		mainf.listClicked();
 	}
 
-	@Override
 	public void mousePressed(MouseEvent e) {
+		mainf.listClicked();
 	}
 
-	@Override
 	public void mouseReleased(MouseEvent e) {
 	}
 
-	@Override
 	public void mouseEntered(MouseEvent e) {
 	}
 
-	@Override
 	public void mouseExited(MouseEvent e) {
 	}
 
-	public DefaultListModel<Task> getModel() {
-		return model;
+	public ArrayList<Task> getArrayList() {
+		return new ArrayList<>(Arrays.asList((Task[]) model.toArray()));
 	}
-
 
 }
