@@ -55,6 +55,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	// panel unten
 	private JPanel panelBottom;
+	private JPanel panelBottomLeft;
 	private JRadioButton radioVergessen;
 	private JRadioButton radioNichtGeschaft;
 	private JRadioButton radioErledigt;
@@ -92,8 +93,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.panelRight.setPreferredSize(new Dimension(450, 40));
 		this.panelList = new JPanel(new GridLayout(11, 1));
 		this.panelList.setPreferredSize(new Dimension(40, 40));
-		this.panelBottom = new JPanel(new GridLayout(5, 3));
-		this.panelBottom.setPreferredSize(new Dimension(8, 75));
+		this.panelBottom = new JPanel(new GridLayout(1, 4));
+		this.panelBottomLeft = new JPanel(new GridLayout(3, 1));
+		this.panelBottomLeft.setPreferredSize(new Dimension(8, 75));
 
 		this.buttonHinzufuegen = new JButton("Hinzufügen");
 		this.buttonHinzufuegen.addActionListener(this);
@@ -154,20 +156,14 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.menuSave.add(menuItemDBSave);
 		this.menuBar.add(menuSave);
 
-		this.panelBottom.add(new JLabel());
-		this.panelBottom.add(new JLabel());
-		this.panelBottom.add(new JLabel());
-		this.panelBottom.add(radioErledigt);
-		this.panelBottom.add(new JLabel());
-		this.panelBottom.add(new JLabel());
-		this.panelBottom.add(radioNichtGeschaft);
-		this.panelBottom.add(new JLabel());
-		this.panelBottom.add(new JLabel());
-		this.panelBottom.add(radioVergessen);
-		this.panelBottom.add(new JLabel());
-		this.panelBottom.add(new JLabel());
-		this.panelBottom.add(buttonSetTaskStatus);
-		this.panelBottom.add(buttonShowAllNotDoneTasks);
+		this.panelBottomLeft.add(radioErledigt);
+		this.panelBottomLeft.add(radioNichtGeschaft);
+		this.panelBottomLeft.add(radioVergessen);
+		
+		panelBottom.add(panelBottomLeft);
+		panelBottom.add(buttonSetTaskStatus);
+		panelBottom.add(new JLabel());
+		panelBottom.add(buttonShowAllNotDoneTasks);
 
 		this.add(this.panelRight, BorderLayout.LINE_END);
 		this.setJMenuBar(this.menuBar);
