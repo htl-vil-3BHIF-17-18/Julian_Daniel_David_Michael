@@ -1,11 +1,12 @@
 package bll;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Task {
 
 	public enum FAECHER {
-		AM, RK, POS, E, BWM_2, BWM_RW, DBI, BSPK, TINF, GGP_GEO, GGP_GPB, SYP, NW_CH
+		AM, D, RK, POS, E, BWM_2, BWM_RW, DBI, BSPK, TINF, GGP_GEO, GGP_GPB, SYP, NW_CH
 	}
 
 	public enum STATUS {
@@ -56,4 +57,9 @@ public class Task {
 		this.status = status;
 	}
 
+	public String toString() {
+		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		return fach.toString() + ", " + aufgabe + ", " + df.format(bisDatum) + " Status: " + status.toString();
+	}
+	
 }
