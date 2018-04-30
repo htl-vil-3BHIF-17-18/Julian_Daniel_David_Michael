@@ -80,7 +80,7 @@ public class CSVIO {
 
 	private File chooseFile() {
 		JFileChooser fc = new JFileChooser();
-		fc.setDialogTitle("Please choose an image...");
+		fc.setDialogTitle("Wähle eine Datei aus");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV", "csv");
 		fc.addChoosableFileFilter(filter);
 		File selectedFile = null;
