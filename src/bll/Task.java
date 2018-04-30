@@ -18,11 +18,11 @@ public class Task {
 	private Date bisDatum;
 	private STATUS status;
 
-	public Task(FAECHER fach, String aufgabe, Date bisDatum) {
+	public Task(FAECHER fach, String aufgabe, Date bisDatum, STATUS status) {
 		this.fach = fach;
 		this.aufgabe = aufgabe;
 		this.bisDatum = bisDatum;
-		this.status = STATUS.OFFEN;
+		this.status = status;
 	}
 
 	public FAECHER getFach() {
