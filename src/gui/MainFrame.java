@@ -5,10 +5,13 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -19,6 +22,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import bll.Task;
+import bll.Task.FAECHER;
+import bll.Task.STATUS;
 import dal.CSVIO;
 import dal.DatabaseIO;
 
@@ -28,7 +33,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	private CSVIO csvHandler;
 	private DatabaseIO databaseHandler;
-	
+
 	// Menu bar components
 	private JMenu menuSave;
 	private JMenuBar menuBar;
@@ -39,42 +44,38 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JPanel panelRight = null;
 	private JPanel panelList = null;
 	private JButton buttonHinzufuegen;
-	private JButton buttonErledigt;
 	private JButton buttonAndern;
 	private JButton buttonEntfernen;
-	private JTextField textfFach;
+	private JComboBox<String> comboFach;
 	private JTextField textfAufgabe;
 	private JTextField textfDatum;
+	private JLabel labelFach;
+	private JLabel labelAufgabe;
+	private JLabel labelDatum;
 
-	// Radio Buttons unten
-	private JPanel pannelnotmaked;
-	private JRadioButton vergessen;
-	private JRadioButton nigesch;
-	
+	// panel unten
+	private JPanel panelBottom;
+	private JRadioButton radioVergessen;
+	private JRadioButton radioNichtGeschaft;
+	private JRadioButton radioErledigt;
+	private JButton buttonSetTaskStatus;
+
 	// Die zwei Listenn
 	private TaskList liste;
-	private TaskList forgottenlist;
 
-	private JLabel platzhalter;
-	private JLabel platzhalter1;
-	private JLabel platzhalter2;
-	private JLabel platzhalter3;
-	private JLabel platzhalter4;
-	
 	public MainFrame() {
 		this.setTitle("Hausaufgabenplaner");
-		this.setSize(2000, 900);
 		this.setResizable(false);
-		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
 		initializeControls();
+		this.setVisible(true);
+		this.setLocationRelativeTo(null); // Fenster mittig anzeigen
 	}
 
 	private void initializeControls() {
 		databaseHandler = new DatabaseIO();
 		csvHandler = new CSVIO();
-		
+
 		BorderLayout grid = new BorderLayout();
 		this.setLayout(grid);
 
@@ -83,81 +84,150 @@ public class MainFrame extends JFrame implements ActionListener {
 		menuSave = new JMenu("Speicher");
 		menuItemDBSave = new JMenuItem("Datenbank");
 		menuItemCSVSave = new JMenuItem("CSV");
-		
-		this.panelRight = new JPanel(new GridLayout(12, 1));
+
+		this.panelRight = new JPanel(new GridLayout(0, 2));
 		this.panelRight.setPreferredSize(new Dimension(450, 40));
 		this.panelList = new JPanel(new GridLayout(11, 1));
 		this.panelList.setPreferredSize(new Dimension(40, 40));
-		this.pannelnotmaked = new JPanel(new GridLayout(4, 2));
-		this.pannelnotmaked.setPreferredSize(new Dimension(8, 75));
-	
-		this.buttonHinzufuegen = new JButton("Hinzufï¿½gen");
-		this.buttonErledigt = new JButton("Erledigt");
+		this.panelBottom = new JPanel(new GridLayout(5, 3));
+		this.panelBottom.setPreferredSize(new Dimension(8, 75));
+
+		this.buttonHinzufuegen = new JButton("Hinzufügen");
+		this.buttonHinzufuegen.addActionListener(this);
 		this.buttonAndern = new JButton("Aendern");
+		this.buttonAndern.addActionListener(this);
+		this.buttonAndern.setEnabled(false);
 		this.buttonEntfernen = new JButton("Entfernen");
+		this.buttonEntfernen.addActionListener(this);
+		this.buttonEntfernen.setEnabled(false);
 
-		this.textfFach = new JTextField("Fach:");
-		this.textfAufgabe = new JTextField("Aufgabe:");
-		this.textfDatum = new JTextField("Datum:");
+		String[] items = new String[Task.FAECHER.values().length];;
+		for(int i = 0; i < Task.FAECHER.values().length; i++) {
+			items[i] = Task.FAECHER.values()[i].toString();
+		}
+		this.comboFach = new JComboBox<>(items);
+		this.textfAufgabe = new JTextField();
+		this.textfDatum = new JTextField();
 
-		this.nigesch = new JRadioButton("nicht geschafft");
-		this.vergessen = new JRadioButton("vergessen");
+		this.labelFach = new JLabel("Fach: ");
+		this.labelDatum = new JLabel("Datum: ");
+		this.labelAufgabe = new JLabel("Aufgabe: ");
+
+		this.radioNichtGeschaft = new JRadioButton("nicht geschafft");
+		this.radioNichtGeschaft.addActionListener(this);
+		this.radioNichtGeschaft.setEnabled(false);
+		this.radioVergessen = new JRadioButton("vergessen");
+		this.radioVergessen.addActionListener(this);
+		this.radioVergessen.setEnabled(false);
+		this.radioErledigt = new JRadioButton("erledigt");
+		this.radioErledigt.addActionListener(this);
+		this.radioErledigt.setEnabled(false);
+		this.buttonSetTaskStatus = new JButton("Setze Task Status");
+		this.buttonSetTaskStatus.addActionListener(this);
+		this.buttonSetTaskStatus.setEnabled(false);
 		ButtonGroup groupRadios = new ButtonGroup();
-		groupRadios.add(nigesch);
-		groupRadios.add(vergessen);
-		
+		groupRadios.add(radioErledigt);
+		groupRadios.add(radioNichtGeschaft);
+		groupRadios.add(radioVergessen);
+
 		this.liste = new TaskList(new ArrayList<Task>(), this);
 		this.liste.setPreferredSize(new Dimension(540, 500));
-		this.forgottenlist = new TaskList(new ArrayList<Task>(), this);
-		this.forgottenlist.setPreferredSize(new Dimension(50, 50));
 
-		this.platzhalter = new JLabel();
-		this.platzhalter1 = new JLabel();
-		this.platzhalter2 = new JLabel();
-		this.platzhalter3 = new JLabel();
-		this.platzhalter4 = new JLabel();
-		
-		this.panelRight.add(platzhalter);
-		this.panelRight.add(textfFach);
+		this.panelRight.add(new JLabel()); // platzhalter
+		this.panelRight.add(new JLabel()); // platzhalter
+		this.panelRight.add(labelFach);
+		this.panelRight.add(comboFach);
+		this.panelRight.add(labelAufgabe);
 		this.panelRight.add(textfAufgabe);
+		this.panelRight.add(labelDatum);
 		this.panelRight.add(textfDatum);
-		this.panelRight.add(platzhalter1);
+		this.panelRight.add(new JLabel()); // platzhalter
 		this.panelRight.add(buttonHinzufuegen);
-		this.panelRight.add(buttonErledigt);
+		this.panelRight.add(new JLabel()); // platzhalter
+		this.panelRight.add(new JLabel()); // platzhalter
 		this.panelRight.add(buttonAndern);
 		this.panelRight.add(buttonEntfernen);
-		this.panelRight.add(platzhalter2);
-		this.panelRight.add(platzhalter3);
-		this.panelRight.add(forgottenlist);
-	
+		this.panelRight.add(new JLabel()); // platzhalter
+		this.panelRight.add(new JLabel()); // platzhalter
+
 		this.menuSave.add(menuItemCSVSave);
 		this.menuSave.add(menuItemDBSave);
 		this.menuBar.add(menuSave);
 
-		this.pannelnotmaked.add(platzhalter4);
-		this.pannelnotmaked.add(nigesch);
-		this.pannelnotmaked.add(vergessen);
-		
+		this.panelBottom.add(new JLabel());
+		this.panelBottom.add(new JLabel());
+		this.panelBottom.add(new JLabel());
+		this.panelBottom.add(radioErledigt);
+		this.panelBottom.add(new JLabel());
+		this.panelBottom.add(new JLabel());
+		this.panelBottom.add(radioNichtGeschaft);
+		this.panelBottom.add(new JLabel());
+		this.panelBottom.add(new JLabel());
+		this.panelBottom.add(radioVergessen);
+		this.panelBottom.add(new JLabel());
+		this.panelBottom.add(new JLabel());
+		this.panelBottom.add(buttonSetTaskStatus);
+
 		this.add(this.panelRight, BorderLayout.LINE_END);
 		this.setJMenuBar(this.menuBar);
-		this.add(this.pannelnotmaked, BorderLayout.PAGE_END);
+		this.add(this.panelBottom, BorderLayout.PAGE_END);
 		this.add(this.liste, BorderLayout.LINE_START);
-				
+
 		this.pack();
-		this.setSize(1000, 850);
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == buttonEntfernen) {
-			
-		}else if(e.getSource() == buttonErledigt) {
-			
-		}else if(e.getSource() == buttonHinzufuegen) {
-			
-		}else if(e.getSource() == menuItemCSVSave) {
-			// csvHandler.writeTasks();
-		}else if(e.getSource() == menuItemDBSave) {
-			// databaseHandler.writeTasks();
+		if (e.getSource() == buttonEntfernen) {
+			liste.removeTask(liste.getSelectedTask());
+		} else if (e.getSource() == buttonHinzufuegen) {
+			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+			try {
+				Task newTask = new Task(FAECHER.valueOf((String) comboFach.getSelectedItem()), textfAufgabe.getText(),
+						df.parse(textfDatum.getText()));
+				liste.addTask(newTask);
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+		} else if (e.getSource() == buttonAndern) {
+			Task tempT = liste.getSelectedTask();
+			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+			tempT.setAufgabe(textfAufgabe.getText());
+			try {
+				tempT.setBisDatum(df.parse(textfDatum.getText()));
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+			tempT.setFach(FAECHER.valueOf((String) comboFach.getSelectedItem()));
+		} else if (e.getSource() == buttonSetTaskStatus) {
+			Task tempT = liste.getSelectedTask();
+			if (radioErledigt.isSelected()) {
+				tempT.setStatus(STATUS.ERLEDIGT);
+				radioErledigt.setSelected(false);
+			} else if (radioNichtGeschaft.isSelected()) {
+				tempT.setStatus(STATUS.NICHTGESCHAFT);
+				radioNichtGeschaft.setSelected(false);
+			} else if (radioVergessen.isSelected()) {
+				tempT.setStatus(STATUS.VERGESSEN);
+				radioVergessen.setSelected(false);
+			}
+		} else if (e.getSource() == menuItemCSVSave) {
+			csvHandler.writeTasks(liste.getArrayList());
+		} else if (e.getSource() == menuItemDBSave) {
+			databaseHandler.writeTasks(liste.getArrayList());
+		} else if (e.getSource() == radioErledigt || e.getSource() == radioNichtGeschaft
+				|| e.getSource() == radioVergessen) { // wenn einer der drei
+														// radio
+														// buttons aktiviert
+														// wird
+			buttonSetTaskStatus.setEnabled(true);
 		}
+	}
+
+	public void listClicked() {
+		this.buttonAndern.setEnabled(true);
+		this.buttonEntfernen.setEnabled(true);
+		this.radioErledigt.setEnabled(true);
+		this.radioNichtGeschaft.setEnabled(true);
+		this.radioVergessen.setEnabled(true);
 	}
 }
