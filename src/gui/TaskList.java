@@ -65,11 +65,13 @@ public class TaskList extends JList<Task> implements MouseListener {
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		mainf.listClicked();
+		if(mainf != null)
+			mainf.listClicked();
 	}
 
 	public void mousePressed(MouseEvent e) {
-		mainf.listClicked();
+		if(mainf != null)
+			mainf.listClicked();
 	}
 
 	public void mouseReleased(MouseEvent e) {
