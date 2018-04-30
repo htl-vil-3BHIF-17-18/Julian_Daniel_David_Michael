@@ -178,6 +178,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == buttonEntfernen) {
 			liste.removeTask(liste.getSelectedTask());
+			disableButtons();
 		} else if (e.getSource() == buttonHinzufuegen) {
 			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 			try {
