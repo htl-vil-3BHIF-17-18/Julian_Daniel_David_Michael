@@ -99,10 +99,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.buttonHinzufuegen.addActionListener(this);
 		this.buttonAndern = new JButton("Aendern");
 		this.buttonAndern.addActionListener(this);
-		this.buttonAndern.setEnabled(false);
 		this.buttonEntfernen = new JButton("Entfernen");
 		this.buttonEntfernen.addActionListener(this);
-		this.buttonEntfernen.setEnabled(false);
 
 		String[] items = new String[Task.FAECHER.values().length];
 		;
@@ -119,16 +117,12 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		this.radioNichtGeschaft = new JRadioButton("nicht geschafft");
 		this.radioNichtGeschaft.addActionListener(this);
-		this.radioNichtGeschaft.setEnabled(false);
 		this.radioVergessen = new JRadioButton("vergessen");
 		this.radioVergessen.addActionListener(this);
-		this.radioVergessen.setEnabled(false);
 		this.radioErledigt = new JRadioButton("erledigt");
 		this.radioErledigt.addActionListener(this);
-		this.radioErledigt.setEnabled(false);
 		this.buttonSetTaskStatus = new JButton("Setze Task Status");
 		this.buttonSetTaskStatus.addActionListener(this);
-		this.buttonSetTaskStatus.setEnabled(false);
 		this.buttonShowAllNotDoneTasks = new JButton("unerledigte Aufgaben");
 		this.buttonShowAllNotDoneTasks.addActionListener(this);
 		ButtonGroup groupRadios = new ButtonGroup();
@@ -180,6 +174,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.add(this.panelBottom, BorderLayout.PAGE_END);
 		this.add(this.liste, BorderLayout.LINE_START);
 
+		this.disableButtons();
+		
 		this.pack();
 	}
 
@@ -225,7 +221,16 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 	}
 
-	public void listClicked() {
+	private void disableButtons() {
+		this.buttonAndern.setEnabled(false);
+		this.buttonEntfernen.setEnabled(false);
+		this.radioErledigt.setEnabled(false);
+		this.radioNichtGeschaft.setEnabled(false);
+		this.radioVergessen.setEnabled(false);
+		this.buttonSetTaskStatus.setEnabled(false);
+	}
+	
+	public void enableButtons() {
 		this.buttonAndern.setEnabled(true);
 		this.buttonEntfernen.setEnabled(true);
 		this.radioErledigt.setEnabled(true);

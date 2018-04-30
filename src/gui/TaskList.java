@@ -76,12 +76,12 @@ public class TaskList extends JPanel implements MouseListener {
 
 	public void mouseClicked(MouseEvent e) {
 		if (mainf != null)
-			mainf.listClicked();
+			mainf.enableButtons();
 	}
 
 	public void mousePressed(MouseEvent e) {
 		if (mainf != null)
-			mainf.listClicked();
+			mainf.enableButtons();
 	}
 
 	public void mouseReleased(MouseEvent e) {
