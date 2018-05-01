@@ -59,6 +59,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	// panel unten
 	private JPanel panelBottom;
 	private JPanel panelBottomLeft;
+	private JLabel labelStatus;
 	private JRadioButton radioVergessen;
 	private JRadioButton radioNichtGeschaft;
 	private JRadioButton radioErledigt;
@@ -100,7 +101,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.panelRight = new JPanel(new GridLayout(0, 2));
 		this.panelRight.setPreferredSize(new Dimension(450, 40));
 		this.panelBottom = new JPanel(new GridLayout(1, 5));
-		this.panelBottomLeft = new JPanel(new GridLayout(3, 1));
+		this.panelBottomLeft = new JPanel(new GridLayout(4, 1));
 		this.panelBottomLeft.setPreferredSize(new Dimension(8, 75));
 
 		this.buttonHinzufuegen = new JButton("Hinzuf�gen");
@@ -122,6 +123,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.labelDatum = new JLabel("Datum: ");
 		this.labelAufgabe = new JLabel("Aufgabe: ");
 
+		this.labelStatus = new JLabel("Status auswahl: ");
 		this.radioNichtGeschaft = new JRadioButton("nicht geschafft");
 		this.radioNichtGeschaft.addActionListener(this);
 		this.radioVergessen = new JRadioButton("vergessen");
@@ -165,6 +167,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.menuBar.add(menuSave);
 		this.menuBar.add(menuLoad);
 
+		this.panelBottomLeft.add(labelStatus);
 		this.panelBottomLeft.add(radioErledigt);
 		this.panelBottomLeft.add(radioNichtGeschaft);
 		this.panelBottomLeft.add(radioVergessen);
@@ -238,6 +241,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.buttonEntfernen.setEnabled(false);
 		this.radioErledigt.setEnabled(false);
 		this.radioNichtGeschaft.setEnabled(false);
+		this.labelStatus.setEnabled(false);
 		this.radioVergessen.setEnabled(false);
 		this.buttonSetTaskStatus.setEnabled(false);
 	}
@@ -248,5 +252,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.radioErledigt.setEnabled(true);
 		this.radioNichtGeschaft.setEnabled(true);
 		this.radioVergessen.setEnabled(true);
+		this.labelStatus.setEnabled(true);
 	}
 }
