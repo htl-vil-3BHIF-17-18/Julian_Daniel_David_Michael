@@ -71,7 +71,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initializeControls();
 		this.setVisible(true);
-		this.setLocationRelativeTo(null); // Fenster mittig anzeigen
+		this.setLocationRelativeTo(null); // Fenste mittig anzeigen
 	}
 
 	private void initializeControls() {
@@ -97,7 +97,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.panelBottomLeft = new JPanel(new GridLayout(3, 1));
 		this.panelBottomLeft.setPreferredSize(new Dimension(8, 75));
 
-		this.buttonHinzufuegen = new JButton("Hinzufügen");
+		this.buttonHinzufuegen = new JButton("Hinzufï¿½gen");
 		this.buttonHinzufuegen.addActionListener(this);
 		this.buttonAndern = new JButton("Aendern");
 		this.buttonAndern.addActionListener(this);
