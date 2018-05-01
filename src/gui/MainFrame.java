@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,6 +22,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 import bll.Task;
 import bll.Task.FAECHER;
@@ -45,7 +50,6 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	// Panelright
 	private JPanel panelRight = null;
-	private JPanel panelList = null;
 	private JButton buttonHinzufuegen;
 	private JButton buttonAndern;
 	private JButton buttonEntfernen;
@@ -99,8 +103,6 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		this.panelRight = new JPanel(new GridLayout(0, 2));
 		this.panelRight.setPreferredSize(new Dimension(450, 40));
-		this.panelList = new JPanel(new GridLayout(11, 1));
-		this.panelList.setPreferredSize(new Dimension(40, 40));
 		this.panelBottom = new JPanel(new GridLayout(1, 4));
 		this.panelBottomLeft = new JPanel(new GridLayout(3, 1));
 		this.panelBottomLeft.setPreferredSize(new Dimension(8, 75));
@@ -141,6 +143,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		this.liste = new TaskList(new ArrayList<Task>(), this);
 		this.liste.setPreferredSize(new Dimension(540, 500));
+		this.liste.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 
 		this.panelRight.add(new JLabel()); // platzhalter
 		this.panelRight.add(new JLabel()); // platzhalter
@@ -175,10 +178,11 @@ public class MainFrame extends JFrame implements ActionListener {
 		panelBottom.add(new JLabel());
 		panelBottom.add(buttonShowAllNotDoneTasks);
 
-		this.add(this.panelRight, BorderLayout.LINE_END);
 		this.setJMenuBar(this.menuBar);
-		this.add(this.panelBottom, BorderLayout.PAGE_END);
-		this.add(this.liste, BorderLayout.LINE_START);
+		this.add(this.panelRight, BorderLayout.EAST);
+		this.add(this.panelBottom, BorderLayout.SOUTH);
+		this.add(this.liste, BorderLayout.WEST);
+		this.add(new JLabel(" "), BorderLayout.CENTER);
 
 		this.disableButtons();
 		
