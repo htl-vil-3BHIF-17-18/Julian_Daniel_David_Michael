@@ -35,11 +35,14 @@ public class MainFrame extends JFrame implements ActionListener {
 	private DatabaseIO databaseHandler;
 
 	// Menu bar components
-	private JMenu menuSave;
 	private JMenuBar menuBar;
+	private JMenu menuSave;
+	private JMenu menuLoad;
 	private JMenuItem menuItemDBSave;
 	private JMenuItem menuItemCSVSave;
-
+	private JMenuItem menuItemDBLoad;
+	private JMenuItem menuItemCSVLoad;
+	
 	// Panelright
 	private JPanel panelRight = null;
 	private JPanel panelList = null;
@@ -81,13 +84,18 @@ public class MainFrame extends JFrame implements ActionListener {
 		BorderLayout grid = new BorderLayout();
 		this.setLayout(grid);
 
-		menuBar = new JMenuBar();
+		this.menuBar = new JMenuBar();
 		this.menuBar.setPreferredSize(new Dimension(40, 60));
-		menuSave = new JMenu("Speicher");
-		menuItemDBSave = new JMenuItem("Datenbank");
-		menuItemDBSave.addActionListener(this);
-		menuItemCSVSave = new JMenuItem("CSV");
-		menuItemCSVSave.addActionListener(this);
+		this.menuSave = new JMenu("Speicher");
+		this.menuLoad = new JMenu("Laden");
+		this.menuItemDBSave = new JMenuItem("Datenbank");
+		this.menuItemDBSave.addActionListener(this);
+		this.menuItemCSVSave = new JMenuItem("CSV");
+		this.menuItemCSVSave.addActionListener(this);
+		this.menuItemDBLoad = new JMenuItem("Datenbank");
+		this.menuItemDBLoad.addActionListener(this);
+		this.menuItemCSVLoad = new JMenuItem("CSV");
+		this.menuItemCSVLoad.addActionListener(this);
 
 		this.panelRight = new JPanel(new GridLayout(0, 2));
 		this.panelRight.setPreferredSize(new Dimension(450, 40));
@@ -153,7 +161,10 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		this.menuSave.add(menuItemCSVSave);
 		this.menuSave.add(menuItemDBSave);
+		this.menuLoad.add(menuItemCSVLoad);
+		this.menuLoad.add(menuItemDBLoad);
 		this.menuBar.add(menuSave);
+		this.menuBar.add(menuLoad);
 
 		this.panelBottomLeft.add(radioErledigt);
 		this.panelBottomLeft.add(radioNichtGeschaft);
@@ -206,6 +217,10 @@ public class MainFrame extends JFrame implements ActionListener {
 			csvHandler.writeTasks(liste.getArrayList());
 		} else if (e.getSource() == menuItemDBSave) {
 			databaseHandler.writeTasks(liste.getArrayList());
+		} else if (e.getSource() == menuItemCSVLoad) {
+			liste.setTasks(csvHandler.readTasks());
+		} else if (e.getSource() == menuItemDBLoad) {
+			liste.setTasks(databaseHandler.readTasks());
 		} else if (e.getSource() == radioErledigt || e.getSource() == radioNichtGeschaft
 				|| e.getSource() == radioVergessen) { // wenn einer der drei
 														// radio
