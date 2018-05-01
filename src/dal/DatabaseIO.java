@@ -20,8 +20,16 @@ public class DatabaseIO {
 		PreparedStatement stmt = null;
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-
-			con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@212.152.179.117:1521:ora11g");
+			try {
+				con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@212.152.179.117:1521:ora11g");
+			} catch (SQLException e) {
+				System.err.println("Versuche mit localer IP auf DB zu verbinden...");
+				try {
+					con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@212.152.179.117:1521:ora11g");
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
 			for (Task t : tasks) {
 				stmt = con.prepareStatement("INSERT INTO tasks VALUES (?,?,?,?)");
 				stmt.setString(1, t.getFach().toString());
@@ -30,18 +38,10 @@ public class DatabaseIO {
 				stmt.setString(4, t.getStatus().toString());
 				stmt.execute();
 			}
-
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				stmt.close();
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 
