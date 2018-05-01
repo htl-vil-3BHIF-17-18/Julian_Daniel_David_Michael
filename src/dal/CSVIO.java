@@ -63,8 +63,9 @@ public class CSVIO {
 		BufferedWriter outputStream = null;
 		try {
 			outputStream = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
+			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 			for (Task t : tasks) {
-				outputStream.write(t.getFach().toString() + ";" + t.getAufgabe() + ";" + t.getBisDatum().toString()
+				outputStream.write(t.getFach().toString() + ";" + t.getAufgabe() + ";" + df.format(t.getBisDatum())
 						+ ";" + t.getStatus().toString() + "\n");
 			}
 		} catch (IOException e) {
