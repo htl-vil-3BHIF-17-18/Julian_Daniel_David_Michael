@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bll.Task;
+import bll.Task.FAECHER;
+import bll.Task.STATUS;
 
 public class DatabaseIO {
 
@@ -46,22 +48,37 @@ public class DatabaseIO {
 	}
 
 	public ArrayList<Task> readTasks() {
+		ArrayList<Task> tasks = new ArrayList<Task>();
+		Task newTask;
+		FAECHER fach;
+		String aufgabe;
+		java.util.Date date;
+		STATUS status;
 		Connection con = null;
 		Statement stmt_Select = null;
 		ResultSet rs = null;
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-
-			con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@212.152.179.117:1521:ora11g");
+			try {
+				con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@212.152.179.117:1521:ora11g");
+			} catch (SQLException e) {
+				System.err.println("Versuche mit localer IP auf DB zu verbinden...");
+				try {
+					con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@212.152.179.117:1521:ora11g");
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
 			stmt_Select = con.createStatement();
-
 			rs = stmt_Select.executeQuery("SELECT * FROM tasks");
 			while (rs.next()) {
-				// TODO datenbanktabellen erstellen und daten versuchen zu lesen
-				// rs.getInt(index), rs.getString(index)...
+				fach = FAECHER.valueOf(rs.getString(1));
+				aufgabe = rs.getString(2);
+				date = dateToUtil(rs.getDate(3));
+				status = STATUS.valueOf(rs.getString(4));
 
-				// System.out.print(rs.getInt(1) + "\t"); //
-				// System.out.println(rs.getString(2));
+				newTask = new Task(fach, aufgabe, date, status);
+				tasks.add(newTask);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -76,7 +93,11 @@ public class DatabaseIO {
 				e.printStackTrace();
 			}
 		}
-		return null;
+		return tasks;
+	}
+
+	private java.util.Date dateToUtil(java.sql.Date date) {
+		return new java.util.Date(date.getTime());
 	}
 
 	private java.sql.Date dateToSql(java.util.Date date) {
