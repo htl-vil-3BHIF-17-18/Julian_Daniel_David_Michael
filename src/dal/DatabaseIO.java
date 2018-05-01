@@ -21,14 +21,13 @@ public class DatabaseIO {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 
-			con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@192.168.128.152:1521:ora11g");
+			con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@212.152.179.117:1521:ora11g");
 			for (Task t : tasks) {
-
-				stmt = con.prepareStatement("INSERT INTO tasks VALUES (?,?,?)");
+				stmt = con.prepareStatement("INSERT INTO tasks VALUES (?,?,?,?)");
 				stmt.setString(1, t.getFach().toString());
 				stmt.setString(2, t.getAufgabe());
-				stmt.setString(3, this.convertDate(t.getBisDatum()));
-
+				stmt.setDate(3, dateToSql(t.getBisDatum()));
+				stmt.setString(4, t.getStatus().toString());
 				stmt.execute();
 			}
 
@@ -53,7 +52,7 @@ public class DatabaseIO {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 
-			con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@192.168.128.152:1521:ora11g");
+			con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@212.152.179.117:1521:ora11g");
 			stmt_Select = con.createStatement();
 
 			rs = stmt_Select.executeQuery("SELECT * FROM tasks");
@@ -79,9 +78,9 @@ public class DatabaseIO {
 		}
 		return null;
 	}
-	
-    private String convertDate(java.util.Date utilDate) {
-    	return String.valueOf(utilDate); 
-}
+
+	private java.sql.Date dateToSql(java.util.Date date) {
+		return new java.sql.Date(date.getTime());
+	}
 
 }
