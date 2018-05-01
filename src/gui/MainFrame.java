@@ -105,7 +105,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.buttonEntfernen.addActionListener(this);
 
 		String[] items = new String[Task.FAECHER.values().length];
-		;
 		for (int i = 0; i < Task.FAECHER.values().length; i++) {
 			items[i] = Task.FAECHER.values()[i].toString();
 		}
