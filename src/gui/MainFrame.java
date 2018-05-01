@@ -99,7 +99,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		this.panelRight = new JPanel(new GridLayout(0, 2));
 		this.panelRight.setPreferredSize(new Dimension(450, 40));
-		this.panelBottom = new JPanel(new GridLayout(1, 4));
+		this.panelBottom = new JPanel(new GridLayout(1, 5));
 		this.panelBottomLeft = new JPanel(new GridLayout(3, 1));
 		this.panelBottomLeft.setPreferredSize(new Dimension(8, 75));
 
@@ -171,6 +171,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		panelBottom.add(panelBottomLeft);
 		panelBottom.add(buttonSetTaskStatus);
+		panelBottom.add(new JLabel());
 		panelBottom.add(new JLabel());
 		panelBottom.add(buttonShowAllNotDoneTasks);
 
