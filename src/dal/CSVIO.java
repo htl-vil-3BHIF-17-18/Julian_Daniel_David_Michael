@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -16,6 +14,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import bll.Task;
 import bll.Task.FAECHER;
 import bll.Task.STATUS;
+import gui.MainFrame;
 
 public class CSVIO {
 
@@ -33,9 +32,8 @@ public class CSVIO {
 			inputStream = new BufferedReader(new FileReader(file.getAbsolutePath()));
 			while ((l = inputStream.readLine()) != null) {
 				splittedLine = l.split(";");
-				SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy");
-				tempTask = new Task(FAECHER.valueOf(splittedLine[0]), splittedLine[1], dt.parse(splittedLine[2]),
-						STATUS.valueOf(splittedLine[3]));
+				tempTask = new Task(FAECHER.valueOf(splittedLine[0]), splittedLine[1],
+						MainFrame.dateformatParse(splittedLine[2]), STATUS.valueOf(splittedLine[3]));
 				newTasks.add(tempTask);
 			}
 		} catch (IOException e) {
@@ -44,8 +42,6 @@ public class CSVIO {
 			System.err.println("Keine Datei wurde ausgewaehlt!");
 		} catch (NumberFormatException ex) {
 			System.err.println("Fehler beim Parsen der Katalognummer!");
-		} catch (ParseException e) {
-			e.printStackTrace();
 		} finally {
 			if (inputStream != null) {
 				try {
@@ -63,10 +59,9 @@ public class CSVIO {
 		BufferedWriter outputStream = null;
 		try {
 			outputStream = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
-			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 			for (Task t : tasks) {
-				outputStream.write(t.getFach().toString() + ";" + t.getAufgabe() + ";" + df.format(t.getBisDatum())
-						+ ";" + t.getStatus().toString() + "\n");
+				outputStream.write(t.getFach().toString() + ";" + t.getAufgabe() + ";"
+						+ MainFrame.dateFormat(t.getBisDatum()) + ";" + t.getStatus().toString() + "\n");
 			}
 		} catch (IOException e) {
 			System.err.println("Fehler beim Schreiben der Datei!");

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -43,7 +44,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JMenuItem menuItemCSVSave;
 	private JMenuItem menuItemDBLoad;
 	private JMenuItem menuItemCSVLoad;
-	
+
 	// Panelright
 	private JPanel panelRight = null;
 	private JButton buttonHinzufuegen;
@@ -171,7 +172,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.panelBottomLeft.add(radioErledigt);
 		this.panelBottomLeft.add(radioNichtGeschaft);
 		this.panelBottomLeft.add(radioVergessen);
-		
+
 		panelBottom.add(panelBottomLeft);
 		panelBottom.add(buttonSetTaskStatus);
 		panelBottom.add(new JLabel());
@@ -185,7 +186,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.add(new JLabel(" "), BorderLayout.CENTER);
 
 		this.disableButtons();
-		
+
 		this.pack();
 	}
 
@@ -194,16 +195,11 @@ public class MainFrame extends JFrame implements ActionListener {
 			liste.removeTask(liste.getSelectedTask());
 			disableButtons();
 		} else if (e.getSource() == buttonHinzufuegen) {
-			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-			try {
-				Task newTask = new Task(FAECHER.valueOf((String) comboFach.getSelectedItem()), textfAufgabe.getText(),
-						df.parse(textfDatum.getText()), STATUS.OFFEN);
-				liste.addTask(newTask);
-			} catch (ParseException e1) {
-				e1.printStackTrace();
-			}
+			Task newTask = new Task(FAECHER.valueOf((String) comboFach.getSelectedItem()), textfAufgabe.getText(),
+					dateformatParse(textfDatum.getText()), STATUS.OFFEN);
+			liste.addTask(newTask);
 		} else if (e.getSource() == buttonAndern) {
-			
+			new DialogTaskEdit(liste.getSelectedTask(), liste);
 		} else if (e.getSource() == buttonSetTaskStatus) {
 			Task tempT = liste.getSelectedTask();
 			if (radioErledigt.isSelected()) {
@@ -245,7 +241,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.radioVergessen.setEnabled(false);
 		this.buttonSetTaskStatus.setEnabled(false);
 	}
-	
+
 	public void enableButtons() {
 		this.buttonAndern.setEnabled(true);
 		this.buttonEntfernen.setEnabled(true);
@@ -253,5 +249,20 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.radioNichtGeschaft.setEnabled(true);
 		this.radioVergessen.setEnabled(true);
 		this.labelStatus.setEnabled(true);
+	}
+
+	public static Date dateformatParse(String date) {
+		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		try {
+			return df.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static String dateFormat(Date date) {
+		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		return df.format(date);
 	}
 }

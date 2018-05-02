@@ -1,7 +1,8 @@
 package bll;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import gui.MainFrame;
 
 public class Task {
 
@@ -58,8 +59,8 @@ public class Task {
 	}
 
 	public String toString() {
-		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-		return fach.toString() + ", " + aufgabe + ", " + df.format(bisDatum) + " Status: " + status.toString();
+		return fach.toString() + ", " + aufgabe + ", " + MainFrame.dateFormat(bisDatum) + " Status: "
+				+ status.toString();
 	}
-	
+
 }

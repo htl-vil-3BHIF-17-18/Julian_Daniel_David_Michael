@@ -45,7 +45,7 @@ public class TaskList extends JPanel implements MouseListener {
 	public void updateList() {
 		taskList.updateUI();
 	}
-	
+
 	public ArrayList<Task> getAllNotFinishedTasks() {
 		ArrayList<Task> notFinished = new ArrayList<Task>();
 		for (Task t : getArrayList()) {
@@ -92,7 +92,7 @@ public class TaskList extends JPanel implements MouseListener {
 
 	public void mouseExited(MouseEvent e) {
 	}
-	
+
 	public ArrayList<Task> getArrayList() {
 		ArrayList<Task> rgw = new ArrayList<Task>();
 		;

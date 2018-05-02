@@ -3,8 +3,6 @@ package gui;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -27,13 +25,23 @@ public class DialogTaskEdit extends JDialog implements ActionListener {
 	private JTextField textfAufgabe;
 	private JTextField textfDate;
 	private JButton btnSubmit;
-	
+
 	public DialogTaskEdit(Task task, TaskList taskList) {
 		this.task = task;
 		this.tasklist = taskList;
 		initializeControls();
+		fillControls();
+		this.pack();
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
 	}
-	
+
+	private void fillControls() {
+		this.comboFach.setSelectedItem(task.getFach().toString());
+		this.textfAufgabe.setText(task.getAufgabe());
+		this.textfDate.setText(MainFrame.dateFormat(task.getBisDatum()));
+	}
+
 	private void initializeControls() {
 		this.setLayout(new GridLayout(0, 2));
 		this.labelFach = new JLabel("Fach: ");
@@ -46,8 +54,9 @@ public class DialogTaskEdit extends JDialog implements ActionListener {
 		this.comboFach = new JComboBox<>(items);
 		this.textfAufgabe = new JTextField();
 		this.textfDate = new JTextField();
+		this.btnSubmit = new JButton("Aendern");
 		this.btnSubmit.addActionListener(this);
-		
+
 		this.add(labelFach);
 		this.add(comboFach);
 		this.add(labelAufgabe);
@@ -59,18 +68,13 @@ public class DialogTaskEdit extends JDialog implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnSubmit) {
+		if (e.getSource() == btnSubmit) {
 			task.setAufgabe(textfAufgabe.getText());
-			task.setFach((FAECHER) comboFach.getSelectedItem());
-			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-			try {
-				task.setBisDatum(df.parse(textfDate.getText()));
-			} catch (ParseException e1) {
-				e1.printStackTrace();
-			}
+			task.setFach(FAECHER.valueOf(comboFach.getSelectedItem().toString()));
+			task.setBisDatum(MainFrame.dateformatParse(textfDate.getText()));
 			tasklist.updateList();
 			this.dispose();
 		}
 	}
-	
+
 }
