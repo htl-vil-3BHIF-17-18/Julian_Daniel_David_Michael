@@ -112,11 +112,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.buttonEntfernen = new JButton("Entfernen");
 		this.buttonEntfernen.addActionListener(this);
 
-		String[] items = new String[Task.FAECHER.values().length];
-		for (int i = 0; i < Task.FAECHER.values().length; i++) {
-			items[i] = Task.FAECHER.values()[i].toString();
-		}
-		this.comboFach = new JComboBox<>(items);
+		this.comboFach = new JComboBox<>(Task.getAllFacher());
 		this.textfAufgabe = new JTextField();
 		this.textfDatum = new JTextField();
 

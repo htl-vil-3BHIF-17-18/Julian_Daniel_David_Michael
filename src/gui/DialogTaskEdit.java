@@ -47,11 +47,7 @@ public class DialogTaskEdit extends JDialog implements ActionListener {
 		this.labelFach = new JLabel("Fach: ");
 		this.labelAufgabe = new JLabel("Aufgabe: ");
 		this.labelDate = new JLabel("Datum: ");
-		String[] items = new String[Task.FAECHER.values().length];
-		for (int i = 0; i < Task.FAECHER.values().length; i++) {
-			items[i] = Task.FAECHER.values()[i].toString();
-		}
-		this.comboFach = new JComboBox<>(items);
+		this.comboFach = new JComboBox<>(Task.getAllFacher());
 		this.textfAufgabe = new JTextField();
 		this.textfDate = new JTextField();
 		this.btnSubmit = new JButton("Aendern");

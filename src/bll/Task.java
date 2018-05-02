@@ -63,4 +63,12 @@ public class Task {
 				+ status.toString();
 	}
 
+	public static String[] getAllFacher() {
+		String[] items = new String[Task.FAECHER.values().length];
+		for (int i = 0; i < Task.FAECHER.values().length; i++) {
+			items[i] = Task.FAECHER.values()[i].toString();
+		}
+		return items;
+	}
+
 }
