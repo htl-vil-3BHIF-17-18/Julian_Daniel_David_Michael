@@ -23,11 +23,11 @@ public class DatabaseIO {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			try {
-				con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@212.152.179.117:1521:ora11g");
+				con = DriverManager.getConnection("jdbc:oracle:thin:d3b07/d3b@212.152.179.117:1521:ora11g");
 			} catch (SQLException e) {
 				System.err.println("Versuche mit localer IP auf DB zu verbinden...");
 				try {
-					con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@192.168.128.152:1521:ora11g");
+					con = DriverManager.getConnection("jdbc:oracle:thin:d3b07/d3b@192.168.128.152:1521:ora11g");
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -60,11 +60,11 @@ public class DatabaseIO {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			try {
-				con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@212.152.179.117:1521:ora11g");
+				con = DriverManager.getConnection("jdbc:oracle:thin:d3b07/d3b@212.152.179.117:1521:ora11g");
 			} catch (SQLException e) {
 				System.err.println("Versuche mit localer IP auf DB zu verbinden...");
 				try {
-					con = DriverManager.getConnection("jdbc:oracle:thin:d3b15/d3b@192.168.128.152:1521:ora11g");
+					con = DriverManager.getConnection("jdbc:oracle:thin:d3b07/d3b@192.168.128.152:1521:ora11g");
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
