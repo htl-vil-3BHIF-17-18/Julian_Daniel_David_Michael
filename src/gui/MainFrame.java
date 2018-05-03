@@ -105,9 +105,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.panelBottomLeft = new JPanel(new GridLayout(4, 1));
 		this.panelBottomLeft.setPreferredSize(new Dimension(8, 75));
 
-		this.buttonHinzufuegen = new JButton("Hinzufuegen");
+		this.buttonHinzufuegen = new JButton("Hinzuf\u00FCgen");
 		this.buttonHinzufuegen.addActionListener(this);
-		this.buttonAndern = new JButton("Aendern");
+		this.buttonAndern = new JButton("\u00C4ndern");
 		this.buttonAndern.addActionListener(this);
 		this.buttonEntfernen = new JButton("Entfernen");
 		this.buttonEntfernen.addActionListener(this);
