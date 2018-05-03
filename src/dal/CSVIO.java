@@ -40,8 +40,6 @@ public class CSVIO {
 			System.err.println("Fehler beim Laden der Datei!");
 		} catch (NullPointerException e) {
 			System.err.println("Keine Datei wurde ausgewaehlt!");
-		} catch (NumberFormatException ex) {
-			System.err.println("Fehler beim Parsen der Katalognummer!");
 		} finally {
 			if (inputStream != null) {
 				try {
