@@ -11,7 +11,7 @@ public class Task {
 	}
 
 	public enum STATUS {
-		OFFEN, ERLEDIGT, VERGESSEN, NICHTGESCHAFT
+		OFFEN, ERLEDIGT, VERGESSEN, NICHTGESCHAFFT
 	}
 
 	private FAECHER fach;

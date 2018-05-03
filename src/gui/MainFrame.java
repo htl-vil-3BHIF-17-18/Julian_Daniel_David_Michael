@@ -88,7 +88,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		this.menuBar = new JMenuBar();
 		this.menuBar.setPreferredSize(new Dimension(40, 60));
-		this.menuSave = new JMenu("Speicher");
+		this.menuSave = new JMenu("Speichern");
 		this.menuLoad = new JMenu("Laden");
 		this.menuItemDBSave = new JMenuItem("Datenbank");
 		this.menuItemDBSave.addActionListener(this);
@@ -105,7 +105,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.panelBottomLeft = new JPanel(new GridLayout(4, 1));
 		this.panelBottomLeft.setPreferredSize(new Dimension(8, 75));
 
-		this.buttonHinzufuegen = new JButton("Hinzuf�gen");
+		this.buttonHinzufuegen = new JButton("Hinzufuegen");
 		this.buttonHinzufuegen.addActionListener(this);
 		this.buttonAndern = new JButton("Aendern");
 		this.buttonAndern.addActionListener(this);
@@ -202,7 +202,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				tempT.setStatus(STATUS.ERLEDIGT);
 				radioErledigt.setSelected(false);
 			} else if (radioNichtGeschaft.isSelected()) {
-				tempT.setStatus(STATUS.NICHTGESCHAFT);
+				tempT.setStatus(STATUS.NICHTGESCHAFFT);
 				radioNichtGeschaft.setSelected(false);
 			} else if (radioVergessen.isSelected()) {
 				tempT.setStatus(STATUS.VERGESSEN);

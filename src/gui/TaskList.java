@@ -49,7 +49,7 @@ public class TaskList extends JPanel implements MouseListener {
 	public ArrayList<Task> getAllNotFinishedTasks() {
 		ArrayList<Task> notFinished = new ArrayList<Task>();
 		for (Task t : getArrayList()) {
-			if (t.getStatus() == STATUS.NICHTGESCHAFT || t.getStatus() == STATUS.VERGESSEN)
+			if (t.getStatus() == STATUS.NICHTGESCHAFFT || t.getStatus() == STATUS.VERGESSEN)
 				notFinished.add(t);
 		}
 		return notFinished;
