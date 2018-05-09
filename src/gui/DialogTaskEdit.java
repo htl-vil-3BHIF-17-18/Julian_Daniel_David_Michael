@@ -10,9 +10,9 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import bll.DateHelper;
 import bll.Task;
 import bll.Task.FAECHER;
+import util.DateHelper;
 
 public class DialogTaskEdit extends JDialog implements ActionListener {
 
