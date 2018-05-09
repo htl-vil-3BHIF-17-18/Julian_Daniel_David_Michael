@@ -10,6 +10,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import bll.DateHelper;
 import bll.Task;
 import bll.Task.FAECHER;
 
@@ -39,7 +40,7 @@ public class DialogTaskEdit extends JDialog implements ActionListener {
 	private void fillControls() {
 		this.comboFach.setSelectedItem(task.getFach().toString());
 		this.textfAufgabe.setText(task.getAufgabe());
-		this.textfDate.setText(MainFrame.dateFormat(task.getBisDatum()));
+		this.textfDate.setText(DateHelper.dateFormat(task.getBisDatum()));
 	}
 
 	private void initializeControls() {
@@ -67,7 +68,7 @@ public class DialogTaskEdit extends JDialog implements ActionListener {
 		if (e.getSource() == btnSubmit) {
 			task.setAufgabe(textfAufgabe.getText());
 			task.setFach(FAECHER.valueOf(comboFach.getSelectedItem().toString()));
-			task.setBisDatum(MainFrame.dateformatParse(textfDate.getText()));
+			task.setBisDatum(DateHelper.dateformatParse(textfDate.getText()));
 			tasklist.updateList();
 			this.dispose();
 		}
