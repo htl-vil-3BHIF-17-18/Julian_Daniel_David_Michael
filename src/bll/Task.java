@@ -2,8 +2,6 @@ package bll;
 
 import java.util.Date;
 
-import gui.MainFrame;
-
 public class Task {
 
 	public enum FAECHER {
@@ -59,7 +57,7 @@ public class Task {
 	}
 
 	public String toString() {
-		return fach.toString() + ", " + aufgabe + ", " + MainFrame.dateFormat(bisDatum) + " Status: "
+		return fach.toString() + ", " + aufgabe + ", " + DateHelper.dateFormat(bisDatum) + " Status: "
 				+ status.toString();
 	}
 

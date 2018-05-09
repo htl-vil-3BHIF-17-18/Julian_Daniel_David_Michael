@@ -5,10 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -23,19 +20,18 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import bll.DateHelper;
+import bll.IOHelper;
 import bll.Task;
 import bll.Task.FAECHER;
 import bll.Task.STATUS;
-import dal.CSVIO;
-import dal.DatabaseIO;
 
 public class MainFrame extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private CSVIO csvHandler;
-	private DatabaseIO databaseHandler;
-
+	private IOHelper ioHelper;
+	
 	// Menu bar components
 	private JMenuBar menuBar;
 	private JMenu menuSave;
@@ -71,6 +67,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private TaskList liste;
 
 	public MainFrame() {
+		ioHelper = new IOHelper();
 		this.setTitle("Hausaufgabenplaner");
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,9 +77,6 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	private void initializeControls() {
-		databaseHandler = new DatabaseIO();
-		csvHandler = new CSVIO();
-
 		BorderLayout grid = new BorderLayout();
 		this.setLayout(grid);
 
@@ -192,7 +186,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			disableButtons();
 		} else if (e.getSource() == buttonHinzufuegen) {
 			Task newTask = new Task(FAECHER.valueOf((String) comboFach.getSelectedItem()), textfAufgabe.getText(),
-					dateformatParse(textfDatum.getText()), STATUS.OFFEN);
+					DateHelper.dateformatParse(textfDatum.getText()), STATUS.OFFEN);
 			liste.addTask(newTask);
 		} else if (e.getSource() == buttonAndern) {
 			new DialogTaskEdit(liste.getSelectedTask(), liste);
@@ -210,13 +204,13 @@ public class MainFrame extends JFrame implements ActionListener {
 			}
 			liste.updateList();
 		} else if (e.getSource() == menuItemCSVSave) {
-			csvHandler.writeTasks(liste.getArrayList());
+			ioHelper.writeCSV(liste.getArrayList());
 		} else if (e.getSource() == menuItemDBSave) {
-			databaseHandler.writeTasks(liste.getArrayList());
+			ioHelper.writeDatabase(liste.getArrayList());
 		} else if (e.getSource() == menuItemCSVLoad) {
-			liste.setTasks(csvHandler.readTasks());
+			liste.setTasks(ioHelper.readCSV());
 		} else if (e.getSource() == menuItemDBLoad) {
-			liste.setTasks(databaseHandler.readTasks());
+			liste.setTasks(ioHelper.readDatabase());
 		} else if (e.getSource() == radioErledigt || e.getSource() == radioNichtGeschaft
 				|| e.getSource() == radioVergessen) { // wenn einer der drei
 														// radio
@@ -246,19 +240,5 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.radioVergessen.setEnabled(true);
 		this.labelStatus.setEnabled(true);
 	}
-
-	public static Date dateformatParse(String date) {
-		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-		try {
-			return df.parse(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public static String dateFormat(Date date) {
-		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-		return df.format(date);
-	}
+	
 }

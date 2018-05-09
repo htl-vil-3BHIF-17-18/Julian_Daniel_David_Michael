@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import bll.DateHelper;
 import bll.Task;
 import bll.Task.FAECHER;
 import bll.Task.STATUS;
-import gui.MainFrame;
 
 public class CSVIO {
 
@@ -33,7 +33,7 @@ public class CSVIO {
 			while ((l = inputStream.readLine()) != null) {
 				splittedLine = l.split(";");
 				tempTask = new Task(FAECHER.valueOf(splittedLine[0]), splittedLine[1],
-						MainFrame.dateformatParse(splittedLine[2]), STATUS.valueOf(splittedLine[3]));
+						DateHelper.dateformatParse(splittedLine[2]), STATUS.valueOf(splittedLine[3]));
 				newTasks.add(tempTask);
 			}
 		} catch (IOException e) {
@@ -59,7 +59,7 @@ public class CSVIO {
 			outputStream = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
 			for (Task t : tasks) {
 				outputStream.write(t.getFach().toString() + ";" + t.getAufgabe() + ";"
-						+ MainFrame.dateFormat(t.getBisDatum()) + ";" + t.getStatus().toString() + "\n");
+						+ DateHelper.dateFormat(t.getBisDatum()) + ";" + t.getStatus().toString() + "\n");
 			}
 		} catch (IOException e) {
 			System.err.println("Fehler beim Schreiben der Datei!");
