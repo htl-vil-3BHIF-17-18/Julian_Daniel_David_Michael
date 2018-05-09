@@ -67,7 +67,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private TaskList liste;
 
 	public MainFrame() {
-		ioHelper = new IOHelper();
+		ioHelper = IOHelper.getInstance();
 		this.setTitle("Hausaufgabenplaner");
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
