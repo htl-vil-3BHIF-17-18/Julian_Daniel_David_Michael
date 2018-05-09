@@ -40,7 +40,7 @@ public class DialogTaskEdit extends JDialog implements ActionListener {
 	private void fillControls() {
 		this.comboFach.setSelectedItem(task.getFach().toString());
 		this.textfAufgabe.setText(task.getAufgabe());
-		this.textfDate.setText(DateHelper.dateFormat(task.getBisDatum()));
+		this.textfDate.setText(DateHelper.getInstance().dateFormat(task.getBisDatum()));
 	}
 
 	private void initializeControls() {
@@ -68,7 +68,7 @@ public class DialogTaskEdit extends JDialog implements ActionListener {
 		if (e.getSource() == btnSubmit) {
 			task.setAufgabe(textfAufgabe.getText());
 			task.setFach(FAECHER.valueOf(comboFach.getSelectedItem().toString()));
-			task.setBisDatum(DateHelper.dateformatParse(textfDate.getText()));
+			task.setBisDatum(DateHelper.getInstance().dateformatParse(textfDate.getText()));
 			tasklist.updateList();
 			this.dispose();
 		}

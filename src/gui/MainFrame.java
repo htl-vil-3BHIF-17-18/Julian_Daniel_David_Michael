@@ -31,7 +31,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private IOHelper ioHelper;
-	
+
 	// Menu bar components
 	private JMenuBar menuBar;
 	private JMenu menuSave;
@@ -186,7 +186,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			disableButtons();
 		} else if (e.getSource() == buttonHinzufuegen) {
 			Task newTask = new Task(FAECHER.valueOf((String) comboFach.getSelectedItem()), textfAufgabe.getText(),
-					DateHelper.dateformatParse(textfDatum.getText()), STATUS.OFFEN);
+					DateHelper.getInstance().dateformatParse(textfDatum.getText()), STATUS.OFFEN);
 			liste.addTask(newTask);
 		} else if (e.getSource() == buttonAndern) {
 			new DialogTaskEdit(liste.getSelectedTask(), liste);
@@ -240,5 +240,5 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.radioVergessen.setEnabled(true);
 		this.labelStatus.setEnabled(true);
 	}
-	
+
 }

@@ -6,7 +6,18 @@ import java.util.Date;
 
 public class DateHelper {
 
-	public static Date dateformatParse(String date) {
+	private static DateHelper instance;
+	
+	private DateHelper() {
+	}
+	
+	public static DateHelper getInstance() {
+		if(DateHelper.instance == null)
+			instance = new DateHelper();
+		return instance;
+	}
+
+	public Date dateformatParse(String date) {
 		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 		try {
 			return df.parse(date);
@@ -16,9 +27,9 @@ public class DateHelper {
 		return null;
 	}
 
-	public static String dateFormat(Date date) {
+	public String dateFormat(Date date) {
 		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 		return df.format(date);
 	}
-	
+
 }

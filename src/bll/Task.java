@@ -59,7 +59,7 @@ public class Task {
 	}
 
 	public String toString() {
-		return fach.toString() + ", " + aufgabe + ", " + DateHelper.dateFormat(bisDatum) + " Status: "
+		return fach.toString() + ", " + aufgabe + ", " + DateHelper.getInstance().dateFormat(bisDatum) + " Status: "
 				+ status.toString();
 	}
 
