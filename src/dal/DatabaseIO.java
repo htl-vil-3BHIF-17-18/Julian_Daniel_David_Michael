@@ -14,7 +14,11 @@ import bll.Task.STATUS;
 
 public class DatabaseIO {
 
+	private String connectionStringLocal;
+	private String connectionStringPublic;
+
 	public DatabaseIO() {
+
 	}
 
 	public void writeTasks(ArrayList<Task> tasks) {
@@ -23,14 +27,11 @@ public class DatabaseIO {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			try {
-				con = DriverManager.getConnection("jdbc:oracle:thin:d3b07/d3b@192.168.128.152:1521:ora11g");
+				System.out.println("Versuche mit oeffentlicher IP auf DB zu verbinden...");
+				con = DriverManager.getConnection(connectionStringPublic);
 			} catch (SQLException e) {
 				System.err.println("Versuche mit localer IP auf DB zu verbinden...");
-				try {
-					con = DriverManager.getConnection("jdbc:oracle:thin:d3b07/d3b@212.152.179.117:1521:ora11g");
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				con = DriverManager.getConnection(connectionStringLocal);
 			}
 			for (Task t : tasks) {
 				stmt = con.prepareStatement("INSERT INTO tasks VALUES (?,?,?,?)");
@@ -60,14 +61,11 @@ public class DatabaseIO {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			try {
-				con = DriverManager.getConnection("jdbc:oracle:thin:d3b07/d3b@192.168.128.152:1521:ora11g");
+				System.out.println("Versuche mit oeffentlicher IP auf DB zu verbinden...");
+				con = DriverManager.getConnection(connectionStringPublic);
 			} catch (SQLException e) {
 				System.err.println("Versuche mit localer IP auf DB zu verbinden...");
-				try {
-					con = DriverManager.getConnection("jdbc:oracle:thin:d3b07/d3b@212.152.179.117:1521:ora11g");
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				con = DriverManager.getConnection(connectionStringLocal);
 			}
 			stmt_Select = con.createStatement();
 			rs = stmt_Select.executeQuery("SELECT * FROM tasks");
@@ -102,6 +100,14 @@ public class DatabaseIO {
 
 	private java.sql.Date dateToSql(java.util.Date date) {
 		return new java.sql.Date(date.getTime());
+	}
+
+	public void setConnectionStringLocal(String connectionStringLocal) {
+		this.connectionStringLocal = connectionStringLocal;
+	}
+
+	public void setConnectionStringPublic(String connectionStringPublic) {
+		this.connectionStringPublic = connectionStringPublic;
 	}
 
 }

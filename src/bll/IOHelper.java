@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 import dal.CSVIO;
 import dal.DatabaseIO;
+import dal.PropertyManager;
 
 public class IOHelper {
 
 	private static IOHelper instance;
 	private CSVIO csvHandler = new CSVIO();
 	private DatabaseIO databaseHandler = new DatabaseIO();
+	private PropertyManager propertyManager;
 
 	public static IOHelper getInstance() {
 		if (IOHelper.instance == null) {
@@ -19,6 +21,16 @@ public class IOHelper {
 	}
 
 	private IOHelper() {
+	}
+
+	public void readConfigFile() {
+		propertyManager = PropertyManager.getInstance();
+		if (propertyManager.configFileExists()) {
+			databaseHandler.setConnectionStringLocal(propertyManager.readProperty("connectionStringLocal"));
+			databaseHandler.setConnectionStringPublic(propertyManager.readProperty("connectionStringPublic"));
+		}else{
+			System.err.println("Die Config file wurde noch nicht erstellt!");
+		}
 	}
 
 	public void writeCSV(ArrayList<Task> t) {

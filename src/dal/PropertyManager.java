@@ -1,5 +1,6 @@
 package dal;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -15,10 +16,16 @@ public class PropertyManager {
 	private PropertyManager() {
 	}
 
-	public static PropertyManager getInstance() throws FileNotFoundException, IOException {
+	public static PropertyManager getInstance() {
 		if (PropertyManager.instance == null) {
 			instance = new PropertyManager();
-			instance.fillProperties();
+			try {
+				instance.fillProperties();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return instance;
 	}
@@ -31,7 +38,11 @@ public class PropertyManager {
 
 	public String readProperty(String name) {
 		return this.props.getProperty(name);
+	}
 
+	public boolean configFileExists() {
+		File f = new File(configFile);
+		return (f.exists() && !f.isDirectory());
 	}
 
 	public void writeProperty(String key, String value) throws IOException {
