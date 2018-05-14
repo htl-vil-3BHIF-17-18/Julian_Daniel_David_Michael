@@ -10,7 +10,7 @@ import java.util.Properties;
 public class PropertyManager {
 
 	private static PropertyManager instance = null;
-	private String configFile = "properties.config";
+	private String configFile = "./res/properties.config";
 	private Properties props = new Properties();
 
 	private PropertyManager() {

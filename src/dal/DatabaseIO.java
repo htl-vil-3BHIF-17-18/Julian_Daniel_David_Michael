@@ -26,11 +26,12 @@ public class DatabaseIO {
 		PreparedStatement stmt = null;
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
+			DriverManager.setLoginTimeout(5);
 			try {
 				System.out.println("Versuche mit oeffentlicher IP auf DB zu verbinden...");
 				con = DriverManager.getConnection(connectionStringPublic);
 			} catch (SQLException e) {
-				System.err.println("Versuche mit localer IP auf DB zu verbinden...");
+				System.out.println("Versuche mit localer IP auf DB zu verbinden...");
 				con = DriverManager.getConnection(connectionStringLocal);
 			}
 			for (Task t : tasks) {
@@ -60,11 +61,12 @@ public class DatabaseIO {
 		ResultSet rs = null;
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
+			DriverManager.setLoginTimeout(5);
 			try {
 				System.out.println("Versuche mit oeffentlicher IP auf DB zu verbinden...");
 				con = DriverManager.getConnection(connectionStringPublic);
 			} catch (SQLException e) {
-				System.err.println("Versuche mit localer IP auf DB zu verbinden...");
+				System.out.println("Versuche mit localer IP auf DB zu verbinden...");
 				con = DriverManager.getConnection(connectionStringLocal);
 			}
 			stmt_Select = con.createStatement();
