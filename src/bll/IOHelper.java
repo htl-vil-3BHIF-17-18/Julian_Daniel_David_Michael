@@ -23,7 +23,7 @@ public class IOHelper {
 	private IOHelper() {
 	}
 
-	public void readConfigFile() {
+	public void readConnectionConfig() {
 		propertyManager = PropertyManager.getInstance();
 		if (propertyManager.configFileExists()) {
 			databaseHandler.setConnectionStringLocal(propertyManager.readProperty("connectionStringLocal"));
